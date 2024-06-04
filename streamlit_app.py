@@ -9,7 +9,6 @@ import zipfile
 import pdfplumber
 from openai import OpenAI
 from pathlib import Path
-import pyaudio
 import os
 
 # Set your OpenAI API key
