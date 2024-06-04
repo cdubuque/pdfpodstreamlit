@@ -1,4 +1,4 @@
-# 📦 pdfPod Streamlit App Starter Kit 
+# 📦 pdfPod Streamlit App 
 ```
 
 Description of the app ...
