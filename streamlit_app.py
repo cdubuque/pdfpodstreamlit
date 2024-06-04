@@ -10,8 +10,10 @@ import pdfplumber
 from openai import OpenAI
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Set your OpenAI API key
+load_dotenv()
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
 # Page title
@@ -22,13 +24,11 @@ with st.expander('About this app'):
     # Your app description here
     "Use me to synthesize your research paper pdfs into podcasts."
 
-# Sidebar for accepting input parameters
-with st.sidebar:
-    # Load data
-    st.header('1.1. Input data')
+# Load data
+st.header('1.1. Input data')
 
-    st.markdown('**1. Upload PDF file**')
-    uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+st.markdown('**1. Upload PDF file**')
+uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
 
 # Initiate the model building process
 if uploaded_file:
