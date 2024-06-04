@@ -1,21 +1,15 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
+# 📦 pdfPod Streamlit App Starter Kit 
 ```
 
 Description of the app ...
 
+pdfPod converts long-from PDFs of research papers or other text based content into short audio summaries similar to an explanatory podcast.
+
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ml-model-builder-template.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pdfpod.streamlit.app/)
 
 ## Section Heading
 
-This is filler text, please replace this with text for this section.
+This is filler text, will replace this with text for this section.
 
-## Further Reading
-
-This is filler text, please replace this with a explanatory text about further relevant resources for this repo
-- Resource 1
-- Resource 2
-- Resource 3
