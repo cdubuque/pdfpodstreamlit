@@ -4,4 +4,3 @@ scikit-learn
 altair>=4.0
 openai
 pdfplumber
-pyaudio
