@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
-import time
 import zipfile
 import pdfplumber
 from openai import OpenAI
