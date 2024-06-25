@@ -3,7 +3,6 @@ import streamlit as st
 import pdfplumber
 from openai import OpenAI
 from pathlib import Path
-import os
 
 # Set your OpenAI API key
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
