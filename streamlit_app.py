@@ -1,10 +1,5 @@
 # Working
-
 import streamlit as st
-import pandas as pd
-import numpy as np
-import altair as alt
-import zipfile
 import pdfplumber
 from openai import OpenAI
 from pathlib import Path
