@@ -5,7 +5,6 @@ altair>=4.0
 openai
 pdfplumber
 numpy
-time
 zipfile
 openai
 pathlib
