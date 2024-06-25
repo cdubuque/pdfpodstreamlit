@@ -10,11 +10,9 @@ import pdfplumber
 from openai import OpenAI
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 
 # Set your OpenAI API key
-load_dotenv()
-client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 # Page title
 st.set_page_config(page_title='pdfPod', page_icon='🤖')

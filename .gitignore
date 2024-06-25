@@ -1,2 +1,4 @@
 config.py
 .env
+.streamlit
+secrets.toml
