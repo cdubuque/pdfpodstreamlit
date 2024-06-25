@@ -3,4 +3,3 @@ openai
 pdfplumber
 openai
 pathlib
-dotenv
