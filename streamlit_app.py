@@ -5,8 +5,7 @@ from openai import OpenAI
 from pathlib import Path
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_blob_sas, BlobSasPermissions,ContentSettings
 import re
-import datetime
-from datetime import timezone, timedelta
+from datetime import datetime, timezone, timedelta
 import requests
 import json
 
@@ -102,7 +101,7 @@ if uploaded_file:
             blob_name,
             account_key=blob_service_client.credential.account_key,
             permission=BlobSasPermissions(read=True),           
-            expiry=datetime.now(timezone.utc) + timedelta(hours=1)  # Token valid for 1 hours
+            expiry=datetime.datetime.now(timezone.utc) + datetime.timedelta(hours=1)  # Token valid for 1 hours
         )
 
         # Create a secure URL for the blob
