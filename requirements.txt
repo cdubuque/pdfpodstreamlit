@@ -2,9 +2,5 @@ streamlit==1.29.0
 openai
 pdfplumber
 openai
-pathlib
-re
 azure.storage.blob
-datetime
 requests
-json
