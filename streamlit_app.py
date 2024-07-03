@@ -5,7 +5,7 @@ from openai import OpenAI
 from pathlib import Path
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_blob_sas, BlobSasPermissions,ContentSettings
 import re
-import datetime
+from datetime import datetime
 from datetime import timezone
 from datetime import timedelta
 import requests
