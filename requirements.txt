@@ -3,3 +3,8 @@ openai
 pdfplumber
 openai
 pathlib
+re
+azure.storage.blob
+datetime
+requests
+json
