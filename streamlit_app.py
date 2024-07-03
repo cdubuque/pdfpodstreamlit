@@ -136,7 +136,7 @@ if uploaded_file:
 
         # UPLOAD TO BUZZSPROUT API
 
-        publishtime = datetime.now(timezone('US/Pacific')) + timedelta(minutes=15)
+        publishtime = datetime.now() + timedelta(minutes=15)
 
         url = st.secrets['BUZZSPROUT_URL']
         headers = {
