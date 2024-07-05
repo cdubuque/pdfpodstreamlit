@@ -39,7 +39,7 @@ if uploaded_file:
 
         # Send contents to OpenAI API for text generation
         completion = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {"role": "system", "content": "Hello ChatGPT, I have a PDF of a research paper. I would like you to generate a concise summary of this paper for a podcast episode of the podcast TechTide. The target audience of the podcast is well-versed in technology and computer science, but not necessarily in the specific area covered by the paper. Please focus on the following in your summary: Key concepts and technologies introduced in the paper. Any innovative methods or findings. Implications of the research and its practical applications. Future directions mentioned in the research or potential impact on the field. Aim for the summary to be engaging and accessible, providing explanations of technical terms and concepts to ensure clarity. Please keep your summary concise but informative. Format it as a plain text verbatim script of the explanation. Do not include titles, sections titles, or any other unnecesary text content. The total number of characters must be less than 2000."},
                 {"role": "user", "content": pdf_text}
@@ -47,7 +47,7 @@ if uploaded_file:
         )
 
         completion_title = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {"role": "system", "content": "Now generate an episode title for the following podcast script."},
                 {"role": "user", "content": pdf_text}
@@ -57,7 +57,7 @@ if uploaded_file:
         podcast_title = completion_title.choices[0].message.content
 
         completion_description = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {"role": "system", "content": "Now generate an episode description for the following podcast script."},
                 {"role": "user", "content": pdf_text}
@@ -136,7 +136,7 @@ if uploaded_file:
 
         # UPLOAD TO BUZZSPROUT API
 
-        publishtime = datetime.now(timezone('US/Pacific')) + timedelta(minutes=15)
+        # publishtime = datetime.now(timezone('US/Pacific')) + timedelta(minutes=15)
 
         url = st.secrets['BUZZSPROUT_URL']
         headers = {
@@ -147,7 +147,7 @@ if uploaded_file:
             'description': podcast_description,
             'audio_url': short_url,
             'private': False,
-            'published_at': publishtime
+            # 'published_at': publishtime
         }
 
         # NEED TO FIGURE OUT HOW TO GET THIS TO AUTOPUBLISH THE EPISODE
