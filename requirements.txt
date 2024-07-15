@@ -4,3 +4,4 @@ pdfplumber
 openai
 azure.storage.blob
 requests
+google.generativeai
