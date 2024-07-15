@@ -11,6 +11,9 @@ from datetime import timedelta
 import requests
 import json
 import google.generativeai as genai
+import streamlit.components.v1 as components
+
+
 
 system_prompt = "Hello ChatGPT, adopt to persona of a podcast host that creates 8 to 12 minutes podcast episodes summarizing research papers. I have a PDF of a research paper. I would like you to generate a concise summary of this paper for a podcast episode of the podcast pdfPod. The target audience of the podcast is well-versed in technology and computer science, but not necessarily in the specific area covered by the paper. Please focus on the following in your summary: Key concepts and technologies introduced in the paper. Any innovative methods or findings. Implications of the research and its practical applications. Future directions mentioned in the research or potential impact on the field. Aim for the summary to be engaging and accessible, providing explanations of technical terms and concepts to ensure clarity. Please keep your summary informative and go into detail on any key topics covered. Each episode is standalone, so please don't tell them to stay tuned for updates. Format it as a plain text verbatim script of the explanation. Do not include titles, sections titles, or any other unnecesary text content. The output must be at least 1000 words."
 
@@ -181,3 +184,5 @@ if uploaded_file:
 
 else:
     st.warning('👈 Upload a PDF file to get started!')
+st.header("1.3. Listen to the previously published episodes and subscribe to the podcast")
+components.iframe("https://www.buzzsprout.com/2352847?client_source=large_player&iframe=true&referrer=https%3A%2F%2Fwww.buzzsprout.com%2F2352847%2Fpodcast%2Fembed", height=375)
