@@ -10,9 +10,14 @@ from datetime import timezone
 from datetime import timedelta
 import requests
 import json
+import google.generativeai as genai
+
+system_prompt = "Hello ChatGPT, adopt to persona of a podcast host that creates 8 to 12 minutes podcast episodes summarizing research papers. I have a PDF of a research paper. I would like you to generate a concise summary of this paper for a podcast episode of the podcast pdfPod. The target audience of the podcast is well-versed in technology and computer science, but not necessarily in the specific area covered by the paper. Please focus on the following in your summary: Key concepts and technologies introduced in the paper. Any innovative methods or findings. Implications of the research and its practical applications. Future directions mentioned in the research or potential impact on the field. Aim for the summary to be engaging and accessible, providing explanations of technical terms and concepts to ensure clarity. Please keep your summary informative and go into detail on any key topics covered. Each episode is standalone, so please don't tell them to stay tuned for updates. Format it as a plain text verbatim script of the explanation. Do not include titles, sections titles, or any other unnecesary text content. The output must be at least 1000 words."
 
 # Set your OpenAI API key
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+genai.configure(api_key=st.secrets['GOOGLE_API_KEY'])
+
 
 # Page title
 st.set_page_config(page_title='pdfPod', page_icon='🤖')
@@ -22,8 +27,14 @@ with st.expander('About this app'):
     # Your app description here
     "Use pdfPod to synthesize your research paper pdfs into podcasts."
 
+st.header('1.1. Choose model')
+model_choice = st.selectbox("Choose the model for generating the podcast summary:", ["OpenAI", "Gemini"])
+
+
+
 # Load data
-st.header('1.1. Input data')
+
+st.header('1.2. Input data')
 
 st.markdown('**1. Upload PDF file**')
 uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
@@ -37,14 +48,25 @@ if uploaded_file:
             for page in pdf.pages:
                 pdf_text += page.extract_text()
 
-        # Send contents to OpenAI API for text generation
-        completion = client.chat.completions.create(
-            model="gpt-3.5-turbo-0125",
-            messages=[
-                {"role": "system", "content": "Hello ChatGPT, adopt to persona of a podcast host that creates 8 to 12 minutes podcast episodes summarizing research papers. I have a PDF of a research paper. I would like you to generate a concise summary of this paper for a podcast episode of the podcast TechTide. The target audience of the podcast is well-versed in technology and computer science, but not necessarily in the specific area covered by the paper. Please focus on the following in your summary: Key concepts and technologies introduced in the paper. Any innovative methods or findings. Implications of the research and its practical applications. Future directions mentioned in the research or potential impact on the field. Aim for the summary to be engaging and accessible, providing explanations of technical terms and concepts to ensure clarity. Please keep your summary informative and go into detail on any key topics covered. Format it as a plain text verbatim script of the explanation. Do not include titles, sections titles, or any other unnecesary text content. The output must be at least 1000 words."},
-                {"role": "user", "content": pdf_text}
-            ]
-        )
+        # Send contents to model API for text generation
+        podcast_script = ""
+
+        if model_choice == "OpenAI":
+            completion = client.chat.completions.create(
+                model="gpt-3.5-turbo-0125",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": pdf_text}
+                ]
+            )
+            podcast_script = completion.choices[0].message.content
+        else:
+            model=genai.GenerativeModel(
+                model_name="gemini-1.5-flash",
+                system_instruction=system_prompt)
+            response = model.generate_content(pdf_text)
+            podcast_script = response.text
+
 
         completion_title = client.chat.completions.create(
             model="gpt-3.5-turbo-0125",
@@ -70,14 +92,14 @@ if uploaded_file:
         response = client.audio.speech.create(
             model="tts-1",
             voice="alloy",
-            input=completion.choices[0].message.content
+            input=podcast_script
         )
         response.stream_to_file(speech_file_path)
 
         st.audio("speech.mp3")
         # Display the generated podcast script
         st.subheader("Generated Podcast Script")
-        st.write(completion.choices[0].message.content)
+        st.write(podcast_script)
 
         # TESTING AZURE BLOB STORAGE AND SAS TOKEN
 
@@ -141,6 +163,7 @@ if uploaded_file:
         url = st.secrets['BUZZSPROUT_URL']
         headers = {
             'Authorization': st.secrets['BUZZSPROUT_KEY'],
+            "User-Agent": "pdfPod (https://pdfpod.com)"
         }
         data = {
             'title': podcast_title,
@@ -150,7 +173,6 @@ if uploaded_file:
             # 'published_at': publishtime
         }
 
-        # NEED TO FIGURE OUT HOW TO GET THIS TO AUTOPUBLISH THE EPISODE
         response = requests.post(url, headers=headers, data=data)
 
         print(response.status_code)
