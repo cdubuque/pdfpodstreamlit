@@ -184,5 +184,5 @@ if uploaded_file:
 
 else:
     st.warning('👈 Upload a PDF file to get started!')
-st.header("1.3. Listen to the previously published episodes and subscribe to the podcast")
+st.header("1.3. Listen to previous episodes and subscribe to the podcast")
 components.iframe("https://www.buzzsprout.com/2352847?client_source=large_player&iframe=true&referrer=https%3A%2F%2Fwww.buzzsprout.com%2F2352847%2Fpodcast%2Fembed", height=375)
